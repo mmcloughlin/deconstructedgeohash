@@ -4,6 +4,12 @@ import (
 	"math"
 )
 
+// EncodeInt encodes the point (lat, lng) to a 64-bit integer geohash.
+func EncodeInt(lat, lng float64) uint64 {
+	return Interleave(Quantize(lat, lng))
+}
+
+// Quantize maps latitude and longitude to 32-bit integers.
 func Quantize(lat, lng float64) (lat32 uint32, lng32 uint32) {
 	lat32 = uint32(math.Ldexp((lat+90.0)/180.0, 32))
 	lng32 = uint32(math.Ldexp((lng+180.0)/360.0, 32))
