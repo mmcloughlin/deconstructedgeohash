@@ -42,6 +42,9 @@ func Interleave(x, y uint32) uint64 {
 	return Spread(x) | (Spread(y) << 1)
 }
 
+// InterleaveAsm implements Interleave with the PDEP instruction.
+func InterleaveAsm(x, y uint32) uint64
+
 // Base32Encode the bits of x according to the geohash alphabet.
 func Base32Encode(x uint64) string {
 	alpha := "0123456789bcdefghjkmnpqrstuvwxyz"

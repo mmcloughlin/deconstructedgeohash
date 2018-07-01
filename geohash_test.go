@@ -34,9 +34,20 @@ func TestQuantizeLatAsm(t *testing.T) {
 	for trial := 0; trial < NumTrials(); trial++ {
 		lat := RandomLat()
 		expect, _ := Quantize(lat, 0)
-		lat32 := QuantizeLatAsm(lat)
-		if math.Abs(float64(lat32-expect)) > 1 {
-			t.Errorf("lat32=%08x expect=%08x delta=%d", lat32, expect, lat32-expect)
+		got := QuantizeLatAsm(lat)
+		if math.Abs(float64(got-expect)) > 1 {
+			t.Errorf("got=%08x expect=%08x delta=%d", got, expect, got-expect)
+		}
+	}
+}
+
+func TestInterleaveAsm(t *testing.T) {
+	for trial := 0; trial < NumTrials(); trial++ {
+		x, y := rand.Uint32(), rand.Uint32()
+		expect := Interleave(x, y)
+		got := InterleaveAsm(x, y)
+		if expect != got {
+			t.Errorf("got=%016x expect=%016x", got, expect)
 		}
 	}
 }
