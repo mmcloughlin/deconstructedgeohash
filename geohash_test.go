@@ -17,9 +17,22 @@ func RandomLat() float64 {
 	return -90 + 180*rand.Float64()
 }
 
+func RandomLng() float64 {
+	return -180 + 360*rand.Float64()
+}
+
 func TestEncode(t *testing.T) {
 	if Encode(-25.382708, -49.265506) != "6gkzwgjzn820" {
 		t.Fail()
+	}
+}
+
+func TestEncodeInt(t *testing.T) {
+	type IntEncoder func(float64, float64) uint64
+	for _, encoder := range []IntEncoder{EncodeInt, EncodeIntAsm} {
+		if encoder(-25.382708, -49.265506) != 0x33e5fe3e3fa2040f {
+			t.FailNow()
+		}
 	}
 }
 
