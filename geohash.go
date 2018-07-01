@@ -21,8 +21,8 @@ func Quantize(lat, lng float64) (lat32 uint32, lng32 uint32) {
 	return
 }
 
-// QuantizeLat implements latitude quantization in assembly.
-func QuantizeLat(lat float64) uint32
+// QuantizeLatAsm implements latitude quantization in assembly.
+func QuantizeLatAsm(lat float64) uint32
 
 // Spread out the 32 bits of x into 64 bits, where the bits of x occupy even
 // bit positions.

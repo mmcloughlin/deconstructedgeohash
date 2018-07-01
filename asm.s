@@ -1,7 +1,7 @@
 #include "textflag.h"
 
-// func QuantizeLat(lat float64) uint32
-TEXT ·QuantizeLat(SB), NOSPLIT, $0
+// func QuantizeLatAsm(lat float64) uint32
+TEXT ·QuantizeLatAsm(SB), NOSPLIT, $0
 	MOVSD lat+0(FP), X0
 
 	MULSD $(0.005555555555555556), X0
