@@ -44,3 +44,9 @@ func Base32Encode(x uint64) string {
 	}
 	return string(b[:])
 }
+
+// QuantizeLatBits maps latitude to the range [1,2] and returns the bits of
+// the floating point representation.
+func QuantizeLatBits(lat float64) uint64 {
+	return math.Float64bits(lat/180.0 + 1.5)
+}
