@@ -5,6 +5,14 @@ prog=geohash
 
 all: $(prog)
 
+$(prog): testvector.h
+
+%: %.c
+	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@
+
+%.h: %.go
+	go run $< > $@
+
 run: $(prog)
 	./$(prog)
 

@@ -4,9 +4,12 @@
 // https://lemire.me/blog/2018/01/09/how-fast-can-you-bit-interleave-32-bit-integers-simd-edition/
 
 #include <stdio.h>
-#include <stdint.h>
+#include <inttypes.h>
 #include <stdlib.h>
 #include <immintrin.h>
+#include <assert.h>
+
+#include "testvector.h"
 
 // print_double prints the 4 doubles in x.
 void print_double(__m256d x)
@@ -42,22 +45,24 @@ void encode_int(double *points, uint64_t *output)
     q[i] = _mm256_srli_epi64(_mm256_castpd_si256(p), 20);
   }
 
-  print_uint32(q[0]);
-  print_uint32(q[1]);
+  // Spread
+  
 }
-
-// Mount Everest test vector.
-#define LAT 27.988056
-#define LNG 86.925278
 
 int main(int argc, char **argv)
 {
-  double points[8] = {
-    LAT, LNG,
-    LAT, LNG,
-    LAT, LNG,
-    LAT, LNG,
-  };
+  double point[8];
+  uint64_t hash[4];
 
-  encode_int(points, NULL);
+  assert(NUM_TEST_VECTORS == 4);
+  for(int i = 0; i < 4; i++) {
+    point[2*i] = test_vectors[i].lat;
+    point[2*i+1] = test_vectors[i].lng;
+  }
+
+  encode_int(point, hash);
+
+  for(int i = 0; i < 4; i++) {
+    printf("hash[%d] = %016" PRIx64 "\texpect %016" PRIx64 "\n", i, hash[i], test_vectors[i].hash);
+  }
 }
