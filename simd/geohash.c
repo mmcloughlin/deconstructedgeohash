@@ -87,12 +87,14 @@ int main(int argc, char **argv)
     lng[i] = test_vectors[i].lng;
   }
 
-  encode_int(lat, lng, hash);
+  assert(NUM_TEST_VECTORS % 4 == 0);
+  for(int i = 0; i < NUM_TEST_VECTORS; i += 4) {
+    encode_int(lat + i, lng + i, hash + i);
+  }
 
   for(int i = 0; i < NUM_TEST_VECTORS; i++) {
     if(hash[i] != test_vectors[i].hash) {
       printf("FAIL hash[%d] = %016" PRIx64 "\texpect %016" PRIx64 "\n", i, hash[i], test_vectors[i].hash);
-      return 1;
     }
   }
 
