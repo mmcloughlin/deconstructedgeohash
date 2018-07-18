@@ -18,14 +18,17 @@ static inline __m256i spread(__m256i x)
             -1, 11, -1, 10, -1, 9, -1, 8,
             -1,  3, -1,  2, -1, 1, -1, 0));
 
-  x = _mm256_or_si256(x, _mm256_slli_epi64(x, 4));
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x0f0f0f0f0f0f0f0f));
+  const __m256i lut = _mm256_set_epi8(85, 84, 81, 80, 69, 68,
+               65, 64, 21, 20, 17, 16, 5, 4, 1, 0, 85, 84, 
+               81, 80, 69, 68, 65, 64, 21, 20, 17, 16, 5, 
+               4, 1, 0);
+  
+  __m256i lo = _mm256_shuffle_epi8(lut, _mm256_and_si256(x, _mm256_set1_epi8(0xf)));
 
-  x = _mm256_or_si256(x, _mm256_slli_epi64(x, 2));
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x3333333333333333));
+  __m256i hi = _mm256_and_si256(x, _mm256_set1_epi8(0xf0));
+  hi = _mm256_shuffle_epi8(lut, _mm256_srli_epi64(hi, 4));
 
-  x = _mm256_or_si256(x, _mm256_slli_epi64(x, 1));
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x5555555555555555));
+  x = _mm256_or_si256(lo, _mm256_slli_epi64(hi, 8));
 
   return x;
 }
