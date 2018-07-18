@@ -12,13 +12,11 @@
 // the lane.
 static inline __m256i spread(__m256i x)
 {
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x00000000ffffffff));
-
-  x = _mm256_or_si256(x, _mm256_slli_epi64(x, 16));
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x0000ffff0000ffff));
-
-  x = _mm256_or_si256(x, _mm256_slli_epi64(x, 8));
-  x = _mm256_and_si256(x, _mm256_set1_epi64x(0x00ff00ff00ff00ff));
+  x  = _mm256_shuffle_epi8(x, _mm256_set_epi8(
+            -1, 11, -1, 10, -1, 9, -1, 8,
+            -1,  3, -1,  2, -1, 1, -1, 0,
+            -1, 11, -1, 10, -1, 9, -1, 8,
+            -1,  3, -1,  2, -1, 1, -1, 0));
 
   x = _mm256_or_si256(x, _mm256_slli_epi64(x, 4));
   x = _mm256_and_si256(x, _mm256_set1_epi64x(0x0f0f0f0f0f0f0f0f));
