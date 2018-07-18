@@ -16,6 +16,9 @@ all: $(test) $(bench) $(lib).c.s
 $(test): $(test).o $(lib).o
 $(bench): $(bench).o $(lib).o
 
+$(test).o $(bench).o: testvector.h
+$(bench).o: benchmark.h
+
 %.o: %.c
 	$(CC) -c -MMD -MP $(CFLAGS) $< -o $@
 
@@ -31,6 +34,6 @@ benchmark.h:
 	wget -O $@ https://raw.githubusercontent.com/lemire/Code-used-on-Daniel-Lemire-s-blog/e96243e014/tmp/benchmark.h
 
 clean:
-	$(RM) $(test) *.o *.c.s
+	$(RM) $$(cat .gitignore)
 
 .PHONY: all clean run tools
