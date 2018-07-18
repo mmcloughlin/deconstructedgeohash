@@ -27,6 +27,6 @@ int main()
     }
   }
 
-  printf("pass\n");
+  printf("pass (%d vectors)\n", NUM_TEST_VECTORS);
   return 0;
 }
