@@ -1,22 +1,36 @@
 CC=clang
-CFLAGS=-std=c11 -O3 -march=native # -Weverything
+CFLAGS=-std=c11 -O3 -march=native -Wextra
+ASMFLAGS=-S -masm=intel -mno-red-zone -mstackrealign -mllvm \
+				 -inline-threshold=1000 -fno-asynchronous-unwind-tables \
+				 -fno-exceptions -fno-rtti
 
-prog=geohash
+lib=geohash
+test=test_$(lib)
+bench=bench_$(lib)
 
-all: $(prog)
+srcs = $(wildcard *.c)
+deps = $(srcs:.c=.d)
 
-$(prog): testvector.h
+all: $(test) $(bench) $(lib).c.s
 
-%: %.c
-	$(CC) $(CFLAGS) $(filter %.c,$^) -o $@
+$(test): $(test).o $(lib).o
+$(bench): $(bench).o $(lib).o
+
+%.o: %.c
+	$(CC) -c -MMD -MP $(CFLAGS) $< -o $@
+
+-include $(deps)
 
 %.h: %.go
 	go run $< > $@
 
-run: $(prog)
-	./$(prog)
+%.c.s: %.c
+	$(CC) $(CFLAGS) $(ASMFLAGS) $^ -o $@
+
+benchmark.h:
+	wget -O $@ https://raw.githubusercontent.com/lemire/Code-used-on-Daniel-Lemire-s-blog/e96243e014/tmp/benchmark.h
 
 clean:
-	$(RM) $(prog)
+	$(RM) $(test) *.o *.c.s
 
-.PHONY: all clean run
+.PHONY: all clean run tools

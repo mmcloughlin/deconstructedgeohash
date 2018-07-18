@@ -1,0 +1,5 @@
+*.d
+*.o
+testvector.h
+benchmark.h
+*_geohash
