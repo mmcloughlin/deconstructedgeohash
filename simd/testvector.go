@@ -9,7 +9,7 @@ import (
 	"github.com/mmcloughlin/spherand"
 )
 
-const NumTestVectors = 1 << 14
+const NumTestVectors = 1 << 10
 
 func main() {
 	fmt.Println("#include <stdint.h>")

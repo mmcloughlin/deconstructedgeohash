@@ -1,6 +1,5 @@
 *.d
 *.o
 *.s
-testvector.h
 benchmark.h
 *_geohash

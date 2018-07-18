@@ -24,7 +24,7 @@ $(bench).o: benchmark.h
 
 -include $(deps)
 
-%.h: %.go godeps
+%.h: %.go
 	go run $< > $@
 
 %.c.s: %.c
@@ -32,10 +32,6 @@ $(bench).o: benchmark.h
 
 benchmark.h:
 	wget -O $@ https://raw.githubusercontent.com/lemire/Code-used-on-Daniel-Lemire-s-blog/e96243e014/tmp/benchmark.h
-
-godeps:
-	go get github.com/mmcloughlin/deconstructedgeohash
-	go get github.com/mmcloughlin/spherand
 
 clean:
 	$(RM) $$(cat .gitignore)
