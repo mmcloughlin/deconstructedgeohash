@@ -25,7 +25,7 @@ int main()
     lng[i] = test_vectors[i].lng;
   }
 
-  BEST_TIME_NOCHECK(encode_int_array(NUM_TEST_VECTORS, lat, lng, hash), /* pre */, 8, NUM_TEST_VECTORS, 1);
+  BEST_TIME_NOCHECK(encode_int_array(NUM_TEST_VECTORS, lat, lng, hash), /* pre */, (1<<18), NUM_TEST_VECTORS, 1);
 
   for(int i = 0; i < NUM_TEST_VECTORS; i++) {
     assert(hash[i] == test_vectors[i].hash);
