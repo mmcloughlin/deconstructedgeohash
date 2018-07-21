@@ -1,8 +1,7 @@
 CC=clang
-CFLAGS=-std=c11 -O3 -march=native -Wextra
-ASMFLAGS=-S -masm=intel -mno-red-zone -mstackrealign -mllvm \
-				 -inline-threshold=1000 -fno-asynchronous-unwind-tables \
-				 -fno-exceptions -fno-rtti
+OPTFLAGS=-O3 -ffast-math -mllvm -x86-use-vzeroupper=0
+CFLAGS=-std=c11 -march=native -Wextra $(OPTFLAGS)
+IACAFLAGS=-DIACA -I$(IACAPATH)
 
 lib=geohash
 test=test_$(lib)
@@ -28,12 +27,15 @@ $(bench).o: benchmark.h
 	go run $< > $@
 
 %.c.s: %.c
-	$(CC) $(CFLAGS) $(ASMFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) -S $^ -o $@
 
 benchmark.h:
 	wget -O $@ https://raw.githubusercontent.com/lemire/Code-used-on-Daniel-Lemire-s-blog/e96243e014/tmp/benchmark.h
 
+%.iaca.o: %.c
+	$(CC) -c $(IACAFLAGS) $(CFLAGS) $< -o $@
+
 clean:
 	$(RM) $$(cat .gitignore)
 
-.PHONY: all clean run tools
+.PHONY: all clean tools
