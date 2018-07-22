@@ -95,12 +95,12 @@ DATA hinibblemask+0x07(SB)/1, $(240)
 
 // reciprocal180 is the float 1/180.0 for quantization.
 GLOBL reciprocal180(SB), (RODATA+NOPTR), $8
-DATA reciprocal180+0x00(SB)/8, $(0.00555555555556)
+DATA reciprocal180+0x00(SB)/8, $(0.005555555555555556)
 
 // reciprocal360 is the float 1/360.0 for quantization.
 GLOBL reciprocal360(SB), (RODATA+NOPTR), $8
-DATA reciprocal360+0x00(SB)/8, $(0.00277777777778)
+DATA reciprocal360+0x00(SB)/8, $(0.002777777777777778)
 
 // onepointfive is the float value 1.5 needed for quantization.
 GLOBL onepointfive(SB), (RODATA+NOPTR), $8
-DATA onepointfive+0x00(SB)/8, $(1.5)
+DATA onepointfive+0x00(SB)/8, $(1.500000000000000000)

@@ -25,7 +25,7 @@ def output_float(name, doc, value):
     Output golang assembly DATA section for the given float value.
     """
     declare(name=name, length=8, doc=doc)
-    data(name=name, size=8, value=value)
+    data(name=name, size=8, value='{:.18f}'.format(value))
 
 
 def output_byte_array(name, doc, array):

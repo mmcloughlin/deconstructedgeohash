@@ -4,15 +4,13 @@ import (
 	"math"
 	"math/rand"
 	"testing"
-
-	"github.com/mmcloughlin/geohash"
 )
 
 func NumTrials() int {
 	if testing.Short() {
 		return 1 << 5
 	}
-	return 1 << 25
+	return 1 << 26
 }
 
 func RandomLat() float64 {
@@ -69,17 +67,18 @@ func TestInterleaveAsm(t *testing.T) {
 
 func TestEncodeInt4(t *testing.T) {
 	var lat, lng [4]float64
-	for i := 0; i < 4; i++ {
-		hash := uint64(0x1111111111111111) * uint64(i)
-		box := geohash.BoundingBoxInt(hash)
-		lat[i], lng[i] = box.Center()
-	}
+	for trial := 0; trial < NumTrials(); trial += 4 {
+		for i := 0; i < 4; i++ {
+			lat[i], lng[i] = RandomLat(), RandomLng()
+		}
 
-	hash := EncodeInt4(lat, lng)
+		hash := EncodeInt4(lat, lng)
 
-	for i := 0; i < 4; i++ {
-		if EncodeInt(lat[i], lng[i]) != hash[i] {
-			t.Fatalf("lat=%f\tlng=%f\tgot=%016x\texpect=%016x\n", lat[i], lng[i], hash[i], EncodeInt(lat[i], lng[i]))
+		for i := 0; i < 4; i++ {
+			expect := EncodeIntAsm(lat[i], lng[i])
+			if expect != hash[i] {
+				t.Fatalf("lat=%f\tlng=%f\tgot=%016x\texpect=%016x\n", lat[i], lng[i], hash[i], expect)
+			}
 		}
 	}
 }
