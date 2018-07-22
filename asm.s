@@ -71,22 +71,22 @@ TEXT ·encodeIntAVX2(SB), NOSPLIT, $0
 	MOVQ lng+8(FP), BX
 	MOVQ hash+16(FP), CX
 
-	VBROADCASTSD reciprocal180+0x00(SB), Y0
+	VBROADCASTSD reciprocal180<>+0x00(SB), Y0
 	VMULPD       (AX), Y0, Y0
-	VBROADCASTSD onepointfive+0x00(SB), Y1
+	VBROADCASTSD onepointfive<>+0x00(SB), Y1
 	VADDPD       Y1, Y0, Y0
 	VPSRLQ       $20, Y0, Y0
-	VBROADCASTSD reciprocal360+0x00(SB), Y2
+	VBROADCASTSD reciprocal360<>+0x00(SB), Y2
 	VMULPD       (BX), Y2, Y2
 	VADDPD       Y1, Y2, Y1
 	VPSRLQ       $20, Y1, Y1
-	VMOVDQU      spreadbytes+0x00(SB), Y2
+	VMOVDQU      spreadbytes<>+0x00(SB), Y2
 	VPSHUFB      Y2, Y0, Y0
-	VBROADCASTSD lonibblemask+0x00(SB), Y3
+	VBROADCASTSD lonibblemask<>+0x00(SB), Y3
 	VPAND        Y3, Y0, Y4
-	VMOVDQU      spreadnibbleslut+0x00(SB), Y5
+	VMOVDQU      spreadnibbleslut<>+0x00(SB), Y5
 	VPSHUFB      Y4, Y5, Y4
-	VBROADCASTSD hinibblemask+0x00(SB), Y6
+	VBROADCASTSD hinibblemask<>+0x00(SB), Y6
 	VPAND        Y6, Y0, Y0
 	VPSRLQ       $4, Y0, Y0
 	VPSHUFB      Y0, Y5, Y0

@@ -2,21 +2,20 @@ import textwrap
 
 
 def data(name, size, value, idx=0):
-    print 'DATA {name}+0x{idx:02x}(SB)/{size}, $({value})'.format(
+    print 'DATA {name}<>+0x{idx:02x}(SB)/{size}, $({value})'.format(
             name=name, idx=idx, size=size, value=value)
 
 
-def docstring(text):
-    lines = textwrap.wrap(text, width=78, initial_indent='// ', subsequent_indent='// ')
-    print '\n'.join(lines)
-
-
-def declare(name, length, doc):
+def header(name, doc):
     print
     assert doc.startswith(name)
     assert doc[-1] == '.'
-    docstring(doc)
-    print 'GLOBL {name}(SB), (RODATA+NOPTR), ${length}'.format(
+    lines = textwrap.wrap(doc, width=78, initial_indent='// ', subsequent_indent='// ')
+    print '\n'.join(lines)
+
+
+def declare(name, length):
+    print 'GLOBL {name}<>(SB), (RODATA+NOPTR), ${length}'.format(
             name=name, length=length)
 
 
@@ -24,17 +23,19 @@ def output_float(name, doc, value):
     """
     Output golang assembly DATA section for the given float value.
     """
-    declare(name=name, length=8, doc=doc)
+    header(name=name, doc=doc)
     data(name=name, size=8, value='{:.18f}'.format(value))
+    declare(name=name, length=8)
 
 
 def output_byte_array(name, doc, array):
     """
     Output golang assembly DATA section for the given byte array.
     """
-    declare(name=name, length=len(array), doc=doc)
+    header(name=name, doc=doc)
     for i, b in enumerate(array):
         data(name=name, idx=i, size=1, value=b)
+    declare(name=name, length=len(array))
 
 
 # Generated header.
