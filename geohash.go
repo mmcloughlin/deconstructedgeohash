@@ -17,6 +17,16 @@ func EncodeInt(lat, lng float64) uint64 {
 // EncodeIntAsm implements integer geohash in assembly.
 func EncodeIntAsm(lat, lng float64) uint64
 
+// encodeIntAVX2 encodes 4 points at once.
+func encodeIntAVX2(lat, lng *float64, hash *uint64)
+
+// EncodeInt4 encodes 4 points at once.
+func EncodeInt4(lat, lng [4]float64) [4]uint64 {
+	var hash [4]uint64
+	encodeIntAVX2(&lat[0], &lng[0], &hash[0])
+	return hash
+}
+
 // Quantize maps latitude and longitude to 32-bit integers.
 func Quantize(lat, lng float64) (lat32 uint32, lng32 uint32) {
 	lat32 = uint32(math.Ldexp((lat+90.0)/180.0, 32))

@@ -4,6 +4,8 @@ import (
 	"math"
 	"math/rand"
 	"testing"
+
+	"github.com/mmcloughlin/geohash"
 )
 
 func NumTrials() int {
@@ -61,6 +63,23 @@ func TestInterleaveAsm(t *testing.T) {
 		got := InterleaveAsm(x, y)
 		if expect != got {
 			t.Errorf("got=%016x expect=%016x", got, expect)
+		}
+	}
+}
+
+func TestEncodeInt4(t *testing.T) {
+	var lat, lng [4]float64
+	for i := 0; i < 4; i++ {
+		hash := uint64(0x1111111111111111) * uint64(i)
+		box := geohash.BoundingBoxInt(hash)
+		lat[i], lng[i] = box.Center()
+	}
+
+	hash := EncodeInt4(lat, lng)
+
+	for i := 0; i < 4; i++ {
+		if EncodeInt(lat[i], lng[i]) != hash[i] {
+			t.Fatalf("lat=%f\tlng=%f\tgot=%016x\texpect=%016x\n", lat[i], lng[i], hash[i], EncodeInt(lat[i], lng[i]))
 		}
 	}
 }
