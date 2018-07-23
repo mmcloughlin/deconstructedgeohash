@@ -65,14 +65,16 @@ func TestInterleaveAsm(t *testing.T) {
 	}
 }
 
-func TestEncodeInt4(t *testing.T) {
-	var lat, lng [4]float64
+func TestEncodeIntSimd(t *testing.T) {
+	lat := make([]float64, 4)
+	lng := make([]float64, 4)
+	hash := make([]uint64, 4)
 	for trial := 0; trial < NumTrials(); trial += 4 {
 		for i := 0; i < 4; i++ {
 			lat[i], lng[i] = RandomLat(), RandomLng()
 		}
 
-		hash := EncodeInt4(lat, lng)
+		EncodeIntSimd(lat, lng, hash)
 
 		for i := 0; i < 4; i++ {
 			expect := EncodeIntAsm(lat[i], lng[i])

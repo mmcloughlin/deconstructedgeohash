@@ -65,11 +65,11 @@ TEXT ·EncodeIntAsm(SB), NOSPLIT, $0
 
 #include "constants.h"
 
-// func encodeIntAVX2(lat, lng *float64, hash *uint64)
-TEXT ·encodeIntAVX2(SB), NOSPLIT, $0
+// func EncodeIntSimd(lat, lng []float64, hash []uint64)
+TEXT ·EncodeIntSimd(SB), NOSPLIT, $0
 	MOVQ lat+0(FP), AX
-	MOVQ lng+8(FP), BX
-	MOVQ hash+16(FP), CX
+	MOVQ lng+24(FP), BX
+	MOVQ hash+48(FP), CX
 
 	VBROADCASTSD reciprocal180<>+0x00(SB), Y0
 	VMULPD       (AX), Y0, Y0

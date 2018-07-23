@@ -28,3 +28,14 @@ func BenchmarkNoopAsm(b *testing.B) {
 		NoopAsm(lat, lng)
 	}
 }
+
+// BenchmarkEncodeIntSimd benchmarks SIMD integer geohash encoding.
+func BenchmarkEncodeIntSimd(b *testing.B) {
+	const lat, lng = 40.463833, -79.972422
+	lat4 := []float64{lat, lat, lat, lat}
+	lng4 := []float64{lng, lng, lng, lng}
+	hash4 := make([]uint64, 4)
+	for i := 0; i < b.N; i++ {
+		EncodeIntSimd(lat4, lng4, hash)
+	}
+}
