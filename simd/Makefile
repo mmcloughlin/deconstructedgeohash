@@ -1,6 +1,6 @@
 CC=clang
 OPTFLAGS=-O3 -ffast-math -mllvm -x86-use-vzeroupper=0
-CFLAGS=-std=c11 -march=native -Wextra $(OPTFLAGS)
+CFLAGS=-std=c11 -mavx2 -Wextra $(OPTFLAGS)
 IACAFLAGS=-DIACA -I$(IACAPATH)
 
 lib=geohash
@@ -10,7 +10,7 @@ bench=bench_$(lib)
 srcs = $(wildcard *.c)
 deps = $(srcs:.c=.d)
 
-all: $(test) $(bench) $(lib).c.s
+all: $(test) $(bench) $(lib).c.s $(lib).objdump
 
 $(test): $(test).o $(lib).o
 $(bench): $(bench).o $(lib).o
@@ -34,6 +34,9 @@ benchmark.h:
 
 %.iaca.o: %.c
 	$(CC) -c $(IACAFLAGS) $(CFLAGS) $< -o $@
+
+%.objdump: %.o
+	objdump -disassemble-all $< > $@
 
 clean:
 	$(RM) $$(cat .gitignore)
