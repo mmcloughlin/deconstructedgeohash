@@ -36,6 +36,6 @@ func BenchmarkEncodeIntSimd(b *testing.B) {
 	lng4 := []float64{lng, lng, lng, lng}
 	hash4 := make([]uint64, 4)
 	for i := 0; i < b.N; i++ {
-		EncodeIntSimd(lat4, lng4, hash)
+		EncodeIntSimd(lat4, lng4, hash4)
 	}
 }
