@@ -1,0 +1,152 @@
+
+geohash.o:	file format Mach-O 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+_encode_int:
+       0:	55 	pushq	%rbp
+       1:	48 89 e5 	movq	%rsp, %rbp
+       4:	c4 e2 7d 19 05 ab 00 00 00 	vbroadcastsd	171(%rip), %ymm0
+       d:	c5 fd 59 07 	vmulpd	(%rdi), %ymm0, %ymm0
+      11:	c4 e2 7d 19 0d a6 00 00 00 	vbroadcastsd	166(%rip), %ymm1
+      1a:	c5 fd 58 c1 	vaddpd	%ymm1, %ymm0, %ymm0
+      1e:	c5 fd 73 d0 14 	vpsrlq	$20, %ymm0, %ymm0
+      23:	c4 e2 7d 19 15 9c 00 00 00 	vbroadcastsd	156(%rip), %ymm2
+      2c:	c5 ed 59 16 	vmulpd	(%rsi), %ymm2, %ymm2
+      30:	c5 ed 58 c9 	vaddpd	%ymm1, %ymm2, %ymm1
+      34:	c5 f5 73 d1 14 	vpsrlq	$20, %ymm1, %ymm1
+      39:	c5 fd 6f 15 9f 00 00 00 	vmovdqa	159(%rip), %ymm2
+      41:	c4 e2 7d 00 c2 	vpshufb	%ymm2, %ymm0, %ymm0
+      46:	c5 fd 6f 1d b2 00 00 00 	vmovdqa	178(%rip), %ymm3
+      4e:	c5 fd db e3 	vpand	%ymm3, %ymm0, %ymm4
+      52:	c5 fd 6f 2d c6 00 00 00 	vmovdqa	198(%rip), %ymm5
+      5a:	c4 e2 55 00 e4 	vpshufb	%ymm4, %ymm5, %ymm4
+      5f:	c4 e2 7d 59 35 68 00 00 00 	vpbroadcastq	104(%rip), %ymm6
+      68:	c5 fd db c6 	vpand	%ymm6, %ymm0, %ymm0
+      6c:	c5 fd 73 d0 04 	vpsrlq	$4, %ymm0, %ymm0
+      71:	c4 e2 55 00 c0 	vpshufb	%ymm0, %ymm5, %ymm0
+      76:	c5 fd 73 f0 08 	vpsllq	$8, %ymm0, %ymm0
+      7b:	c5 fd eb c4 	vpor	%ymm4, %ymm0, %ymm0
+      7f:	c4 e2 75 00 ca 	vpshufb	%ymm2, %ymm1, %ymm1
+      84:	c5 f5 db d3 	vpand	%ymm3, %ymm1, %ymm2
+      88:	c4 e2 55 00 d2 	vpshufb	%ymm2, %ymm5, %ymm2
+      8d:	c5 f5 db ce 	vpand	%ymm6, %ymm1, %ymm1
+      91:	c5 f5 73 d1 04 	vpsrlq	$4, %ymm1, %ymm1
+      96:	c4 e2 55 00 c9 	vpshufb	%ymm1, %ymm5, %ymm1
+      9b:	c5 f5 73 f1 08 	vpsllq	$8, %ymm1, %ymm1
+      a0:	c5 f5 eb ca 	vpor	%ymm2, %ymm1, %ymm1
+      a4:	c5 f5 d4 c9 	vpaddq	%ymm1, %ymm1, %ymm1
+      a8:	c5 fd eb c1 	vpor	%ymm1, %ymm0, %ymm0
+      ac:	c5 fe 7f 02 	vmovdqu	%ymm0, (%rdx)
+      b0:	5d 	popq	%rbp
+      b1:	c3 	retq
+Disassembly of section __TEXT,__literal8:
+__literal8:
+      b8:	17  <unknown>
+      b9:	6c 	insb	%dx, %es:(%rdi)
+      ba:	c1 16 6c 	rcll	$108, (%rsi)
+      bd:	c1 76 3f  <unknown>
+      c0:	00 00 	addb	%al, (%rax)
+      c2:	00 00 	addb	%al, (%rax)
+      c4:	00 00 	addb	%al, (%rax)
+      c6:	f8 	clc
+      c7:	3f  <unknown>
+      c8:	17  <unknown>
+      c9:	6c 	insb	%dx, %es:(%rdi)
+      ca:	c1 16 6c 	rcll	$108, (%rsi)
+      cd:	c1 66 3f f0 	shll	$240, 63(%rsi)
+      d1:	f0 	lock
+      d2:	f0 	lock
+      d3:	f0 	lock
+      d4:	f0 	lock
+      d5:	f0 	lock
+      d6:	f0 	lock
+      d7:	f0 	lock
+Disassembly of section __TEXT,__const:
+__const:
+      e0:	00 80 01 80 02 80 	addb	%al, -2147319807(%rax)
+      e6:	03 80 08 80 09 80 	addl	-2146861048(%rax), %eax
+      ec:	0a 80 0b 80 00 80 	orb	-2147450869(%rax), %al
+      f2:	01 80 02 80 03 80 	addl	%eax, -2147254270(%rax)
+      f8:	08 80 09 80 0a 80 	orb	%al, -2146795511(%rax)
+      fe:	0b 80 0f 0f 0f 0f 	orl	252645135(%rax), %eax
+     104:	0f 0f  <unknown>
+     106:	0f 0f  <unknown>
+     108:	0f 0f  <unknown>
+     10a:	0f 0f  <unknown>
+     10c:	0f 0f  <unknown>
+     10e:	0f 0f  <unknown>
+     110:	0f 0f  <unknown>
+     112:	0f 0f  <unknown>
+     114:	0f 0f  <unknown>
+     116:	0f 0f  <unknown>
+     118:	0f 0f  <unknown>
+     11a:	0f 0f  <unknown>
+     11c:	0f 0f  <unknown>
+     11e:	0f 0f  <unknown>
+     120:	00 01 	addb	%al, (%rcx)
+     122:	04 05 	addb	$5, %al
+     124:	10 11 	adcb	%dl, (%rcx)
+     126:	14 15 	adcb	$21, %al
+     128:	40  <unknown>
+     129:	41  <unknown>
+     12a:	44  <unknown>
+     12b:	45 50 	pushq	%r8
+     12d:	51 	pushq	%rcx
+     12e:	54 	pushq	%rsp
+     12f:	55 	pushq	%rbp
+     130:	00 01 	addb	%al, (%rcx)
+     132:	04 05 	addb	$5, %al
+     134:	10 11 	adcb	%dl, (%rcx)
+     136:	14 15 	adcb	$21, %al
+     138:	40  <unknown>
+     139:	41  <unknown>
+     13a:	44  <unknown>
+     13b:	45 50 	pushq	%r8
+     13d:	51 	pushq	%rcx
+     13e:	54 	pushq	%rsp
+     13f:	55 	pushq	%rbp
+Disassembly of section __LD,__compact_unwind:
+__compact_unwind:
+     140:	00 00 	addb	%al, (%rax)
+     142:	00 00 	addb	%al, (%rax)
+     144:	00 00 	addb	%al, (%rax)
+     146:	00 00 	addb	%al, (%rax)
+     148:	b2 00 	movb	$0, %dl
+     14a:	00 00 	addb	%al, (%rax)
+     14c:	00 00 	addb	%al, (%rax)
+     14e:	00 01 	addb	%al, (%rcx)
+     150:	00 00 	addb	%al, (%rax)
+     152:	00 00 	addb	%al, (%rax)
+     154:	00 00 	addb	%al, (%rax)
+     156:	00 00 	addb	%al, (%rax)
+     158:	00 00 	addb	%al, (%rax)
+     15a:	00 00 	addb	%al, (%rax)
+     15c:	00 00 	addb	%al, (%rax)
+     15e:	00 00 	addb	%al, (%rax)
+Disassembly of section __TEXT,__eh_frame:
+__eh_frame:
+     160:	14 00 	adcb	$0, %al
+     162:	00 00 	addb	%al, (%rax)
+     164:	00 00 	addb	%al, (%rax)
+     166:	00 00 	addb	%al, (%rax)
+     168:	01 7a 52 	addl	%edi, 82(%rdx)
+     16b:	00 01 	addb	%al, (%rcx)
+     16d:	78 10 	js	16 <__eh_frame+0x1F>
+     16f:	01 10 	addl	%edx, (%rax)
+     171:	0c 07 	orb	$7, %al
+     173:	08 90 01 00 00 24 	orb	%dl, 603979777(%rax)
+     179:	00 00 	addb	%al, (%rax)
+     17b:	00 1c 00 	addb	%bl, (%rax,%rax)
+     17e:	00 00 	addb	%al, (%rax)
+     180:	80 fe ff 	cmpb	$-1, %dh
+     183:	ff ff  <unknown>
+     185:	ff ff  <unknown>
+     187:	ff b2 00 00 00 00 	pushq	(%rdx)
+     18d:	00 00 	addb	%al, (%rax)
+     18f:	00 00 	addb	%al, (%rax)
+     191:	41 0e  <unknown>
+     193:	10 86 02 43 0d 06 	adcb	%al, 101532418(%rsi)
+     199:	00 00 	addb	%al, (%rax)
+     19b:	00 00 	addb	%al, (%rax)
+     19d:	00 00 	addb	%al, (%rax)
+     19f:	00  <unknown>
