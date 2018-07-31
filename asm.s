@@ -80,11 +80,11 @@ TEXT ·EncodeIntSimd(SB), NOSPLIT, $0
 	VMULPD       (BX), Y2, Y2
 	VADDPD       Y1, Y2, Y1
 	VPSRLQ       $20, Y1, Y1
-	VMOVDQU      spreadbytes<>+0x00(SB), Y2
+	VMOVDQU      spreadbyte<>+0x00(SB), Y2
 	VPSHUFB      Y2, Y0, Y0
 	VBROADCASTSD lonibblemask<>+0x00(SB), Y3
 	VPAND        Y3, Y0, Y4
-	VMOVDQU      spreadnibbleslut<>+0x00(SB), Y5
+	VMOVDQU      spreadnibblelut<>+0x00(SB), Y5
 	VPSHUFB      Y4, Y5, Y4
 	VBROADCASTSD hinibblemask<>+0x00(SB), Y6
 	VPAND        Y6, Y0, Y0

@@ -49,8 +49,8 @@ shuf128 = [
     8, 128, 9, 128, 10, 128, 11, 128,
 ]
 output_byte_array(
-        'spreadbytes',
-        'spreadbytes is the VPSHUFB input required to spread bytes in each word.',
+        'spreadbyte',
+        'spreadbyte is the VPSHUFB input required to spread bytes in each word.',
         shuf128 * 2,
         )
 
@@ -66,8 +66,8 @@ def spread(x):
 
 
 output_byte_array(
-        'spreadnibbleslut',
-        'spreadnibbleslut is a lookup table to perform 4-bit spread operations with VPSHUFB.',
+        'spreadnibblelut',
+        'spreadnibblelut is a lookup table to perform 4-bit spread operations with VPSHUFB.',
         list(map(spread, range(16))) * 2,
 )
 
