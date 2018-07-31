@@ -45,8 +45,6 @@ static inline __m256i spread(__m256i x)
 
 void encode_int(double *lat, double *lng, uint64_t *output)
 {
-  KERNEL_START
-
   // Quantize.
   __m256d latq = _mm256_loadu_pd(lat);
   latq = _mm256_mul_pd(latq, _mm256_set1_pd(1/180.0));
@@ -61,6 +59,4 @@ void encode_int(double *lat, double *lng, uint64_t *output)
   // Spread.
   __m256i hash = _mm256_or_si256(spread(lati), _mm256_slli_epi64(spread(lngi), 1));
   _mm256_storeu_si256((__m256i *)output, hash);
-
-  KERNEL_END
 }
