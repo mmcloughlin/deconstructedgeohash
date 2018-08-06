@@ -33,7 +33,8 @@ static inline __m256i spread(__m256i x)
             85, 84, 81, 80, 69, 68, 65, 64,
             21, 20, 17, 16,  5,  4,  1,  0);
 
-  __m256i lo = _mm256_shuffle_epi8(lut, _mm256_and_si256(x, _mm256_set1_epi8(0xf)));
+  __m256i lo = _mm256_and_si256(x, _mm256_set1_epi8(0xf));
+  lo = _mm256_shuffle_epi8(lut, lo);
 
   __m256i hi = _mm256_and_si256(x, _mm256_set1_epi8(0xf0));
   hi = _mm256_shuffle_epi8(lut, _mm256_srli_epi64(hi, 4));
@@ -57,6 +58,8 @@ void encode_int(double *lat, double *lng, uint64_t *output)
   __m256i lngi = _mm256_srli_epi64(_mm256_castpd_si256(lngq), 20);
 
   // Spread.
-  __m256i hash = _mm256_or_si256(spread(lati), _mm256_slli_epi64(spread(lngi), 1));
+  __m256i hash = _mm256_or_si256(
+      spread(lati),
+      _mm256_slli_epi64(spread(lngi), 1));
   _mm256_storeu_si256((__m256i *)output, hash);
 }
